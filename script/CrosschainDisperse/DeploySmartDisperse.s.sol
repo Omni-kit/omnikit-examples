@@ -7,8 +7,7 @@ import {CrossChainTokenTransfer} from "../../src/Interop-Example/CrossChainToken
 import {ContractDeployer} from "../../src/ContractDeployer.sol";
 
 contract DeployDeploySmartDisperseScript is Script {
-    // bytes32 salt = keccak256(abi.encodePacked("CrossChainTokenTransfer"));
-
+    
     struct ChainConfig {
         uint256 chainId;
         string rpcUrl;
@@ -40,8 +39,6 @@ contract DeployDeploySmartDisperseScript is Script {
             "SmartDisperse contract deployed at:",
             address(disperse901)
         );
-
-    
         vm.stopBroadcast();
 
         // Deploy on Chain 2 (OPChainB).
@@ -56,8 +53,6 @@ contract DeployDeploySmartDisperseScript is Script {
             "SmartDisperse contract deployed at:",
             address(disperse902)
         );
-
-    
 
         vm.stopBroadcast();
     }

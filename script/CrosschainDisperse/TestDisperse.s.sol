@@ -3,45 +3,41 @@ pragma solidity ^0.8.25;
 
 import {Script} from "forge-std/Script.sol";
 import {ISuperchainWETH} from "optimism-contracts/interfaces/L2/ISuperchainWETH.sol";
-
 import {console2} from "forge-std/console2.sol";
 
 contract TestDisperse is Script {
     address payable constant SUPERCHAIN_WETH_TOKEN =
         payable(0x4200000000000000000000000000000000000024);
-    address public constant TARGET_CONTRACT =
+    address constant TARGET_CONTRACT =
         0xA9E61938002f56C5d81258dc20920c318E9c98d4;
 
     function run() external {
-        uint256 privateKey = vm.envUint("PRIVATE_KEY");
-        address user = vm.addr(privateKey);
-        uint256 amountToTransfer = 5 ether; // Set required WETH amount
-        console2.log("user", user);
-
-        vm.startBroadcast(privateKey);
-
         ISuperchainWETH wethToken = ISuperchainWETH(SUPERCHAIN_WETH_TOKEN);
 
-        // Wrap ETH to WETH if needed
-        if (wethToken.balanceOf(user) < amountToTransfer) {
-            uint256 amountNeeded = amountToTransfer - wethToken.balanceOf(user);
-            wethToken.deposit{value: amountNeeded}();
-            console2.log("Wrapped", amountNeeded, "ETH to WETH");
+        uint256 fork1 = vm.createFork("http://127.0.0.1:9545");
+        uint256 fork2 = vm.createFork("http://127.0.0.1:9546");
+
+        uint256 privateKey = vm.envUint("PRIVATE_KEY");
+        address user = vm.addr(privateKey);
+
+        address[] memory recipients = new address[](2);
+        recipients[0] = 0x90F79bf6EB2c4f870365E785982E1f101E93b906;
+        recipients[1] = 0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65;
+
+        uint256[] memory amounts = new uint256[](2);
+        amounts[0] = 2 ether;
+        amounts[1] = 3 ether;
+
+        vm.selectFork(fork1);
+        vm.startBroadcast(privateKey);
+
+        uint256 totalAmount = amounts[0] + amounts[1];
+
+        if (wethToken.balanceOf(user) < totalAmount) {
+            wethToken.deposit{value: totalAmount - wethToken.balanceOf(user)}();
         }
+        wethToken.approve(TARGET_CONTRACT, totalAmount);
 
-        // Approve target contract to spend WETH
-        wethToken.approve(TARGET_CONTRACT, amountToTransfer);
-        // console2.log(
-        //     "Approved",
-        //     TARGET_CONTRACT,
-        //     "to spend",
-        //     amountToTransfer,
-        //     "WETH"
-        // );
-
-        // Call the transfer function on target contract
-
-        console2.log("Calling transferERC20TokensToSingleChain...");
         (bool success, ) = TARGET_CONTRACT.call(
             abi.encodeWithSignature(
                 "transferERC20TokensToSingleChain(address,uint256,address[],uint256[])",
@@ -52,10 +48,19 @@ contract TestDisperse is Script {
             )
         );
         require(success, "Transfer failed");
-
-        console2.log("Transfer successful");
         vm.stopBroadcast();
+
+        vm.selectFork(fork2);
+
+        console2.log("after transfer...");
+
+        console2.log(
+            "Recipient 0 Balance:",
+            wethToken.balanceOf(recipients[0])
+        );
+        console2.log(
+            "Recipient 1 Balance:",
+            wethToken.balanceOf(recipients[1])
+        );
     }
 }
-
-// forge script script/TestDisperse.s.sol --fork-url http://localhost:9545 -vvv
