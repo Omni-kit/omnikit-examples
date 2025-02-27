@@ -13,7 +13,6 @@ In a multi-chain environment, sometimes a contract on **one chain** needs to upd
 
 ✅ **Both contracts are deployed at the same address on different chains** using `CREATE3`.  
 ✅ You can also use the **Omni-Deployer package** for deployment: [`@omni-kit/omni-deployer`](https://www.npmjs.com/package/@omni-kit/omni-deployer).  
-✅ Check the **deployment script** in: `script/StateSync/DeployCounter.s.sol`.
 
 ---
 

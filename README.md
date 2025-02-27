@@ -1,66 +1,55 @@
-## Foundry
+# **Omnikit Example Repository**  
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This repository contains **practical examples** demonstrating how to use Omnikit for **cross-chain communication and state synchronization**.  
 
-Foundry consists of:
+## **📁 Structure**  
+Each example is stored in a separate folder:  
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+1. **StateSync-Example** – Demonstrates cross-chain state synchronization.  
+2. **Interop-Example** – Shows how to transfer ERC20 tokens across chains.  
 
-## Documentation
+---
 
-https://book.getfoundry.sh/
+## **🚀 Examples Overview**  
 
-## Usage
+### **1️⃣ State Sync Example (`StateSync-Example/`)**  
+📌 **Goal:** Synchronize a counter’s state across multiple chains.  
 
-### Build
+**Contracts:**  
+- `PrimaryCounter.sol` – Updates the counter and syncs the value across chains.  
+- `Counter.sol` – Receives the update and applies the new value.  
 
-```shell
-$ forge build
-```
+**Key Features:**  
+✅ Uses `syncStates()` to send state updates to another chain.  
+✅ Validates updates with `CrossChainUtils.validateCrossDomainCallback()`.  
+✅ Ensures both contracts are deployed at the **same address** across chains using `CREATE3` or [Omni Deployer](https://www.npmjs.com/package/@omni-kit/omni-deployer).  
+✅ Deployment script: [`script/StateSync/DeployCounter.s.sol`](script/StateSync/DeployCounter.s.sol).  
 
-### Test
+---
 
-```shell
-$ forge test
-```
+### **2️⃣ Interop Example (`Interop-Example/`)**  
+📌 **Goal:** Transfer ERC20 tokens across chains using Omnikit.  
 
-### Format
+**Contract:**  
+- `CrossChainDisperse.sol` – Handles token transfers and ensures cross-chain execution.  
 
-```shell
-$ forge fmt
-```
+**Key Features:**  
+✅ Transfers ERC20 tokens across chains via Omnikit’s `sendERC20ViaBridge()`.  
+✅ Uses `_sendCrossChainMessage()` to call functions on another chain.  
+✅ Supports multi-chain token distribution with `disperseTokens()`.  
 
-### Gas Snapshots
+---
 
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## **📌 Getting Started**  
+### **1️⃣ Install Dependencies**    
+```sh
+forge install
+```  
+### **2️⃣ Compile the Contracts**  
+```sh
+forge build
+```  
+### **3️⃣ Run Tests**  
+```sh
+forge test
+```  
