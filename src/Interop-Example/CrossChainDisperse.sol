@@ -10,12 +10,6 @@ contract CrossChainDisperse is ReentrancyGuard {
     using CrossChainUtils for *;
     using Common for *;
 
-    struct ChainTransfer {
-        uint256 chainId;
-        address[] recipients;
-        uint256[] amounts;
-    }
-
     /*******************************     EVENTS      ***********************************/
 
     event TokensReceived(
