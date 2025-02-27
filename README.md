@@ -1,4 +1,4 @@
-# **Omnikit Example Repository**  
+# **Omnikit Examples**  
 
 This repository contains **practical examples** demonstrating how to use Omnikit for **cross-chain communication and state synchronization**.  
 
