@@ -3,11 +3,10 @@ pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
 
-import {CrossChainTokenTransfer} from "../../src/Interop-Example/CrossChainTokenTransfer.sol";
+import {CrossChainDisperse} from "../../src/Interop-Example/CrossChainDisperse.sol";
 import {ContractDeployer} from "../../src/ContractDeployer.sol";
 
-contract DeployDeploySmartDisperseScript is Script {
-    
+contract DeployCrossChainDisperse is Script {
     struct ChainConfig {
         uint256 chainId;
         string rpcUrl;
@@ -31,7 +30,7 @@ contract DeployDeploySmartDisperseScript is Script {
         vm.selectFork(fork1);
         vm.startBroadcast(deployerPrivateKey);
 
-        CrossChainTokenTransfer disperse901 = new CrossChainTokenTransfer{
+        CrossChainDisperse disperse901 = new CrossChainDisperse{
             salt: "SmartDisperse"
         }();
         console.log("deploying in 901...");
@@ -45,7 +44,7 @@ contract DeployDeploySmartDisperseScript is Script {
         vm.selectFork(fork2);
         vm.startBroadcast(deployerPrivateKey);
 
-        CrossChainTokenTransfer disperse902 = new CrossChainTokenTransfer{
+        CrossChainDisperse disperse902 = new CrossChainDisperse{
             salt: "SmartDisperse"
         }();
         console.log("deploying in 902...");

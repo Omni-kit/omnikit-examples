@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {CrossChainStateSync} from "omnikit/CrossChainStateSync.sol";
+import {CrossChainUtils} from "omnikit/library/CrossChainUtils.sol";
 
-contract Counter is CrossChainStateSync {
+contract Counter {
     uint256 public number;
 
-    function setNumber(uint256 newNumber) public onlyCrossDomainCallback {
+    function setNumber(uint256 newNumber) public {
+        CrossChainUtils.validateCrossDomainCallback();
         number = newNumber;
     }
 
