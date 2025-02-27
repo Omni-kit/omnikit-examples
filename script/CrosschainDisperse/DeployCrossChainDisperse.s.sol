@@ -4,7 +4,6 @@ pragma solidity ^0.8.13;
 import {Script, console} from "forge-std/Script.sol";
 
 import {CrossChainDisperse} from "../../src/Interop-Example/CrossChainDisperse.sol";
-import {ContractDeployer} from "../../src/ContractDeployer.sol";
 
 contract DeployCrossChainDisperse is Script {
     struct ChainConfig {
