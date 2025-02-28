@@ -23,6 +23,8 @@ Each example is stored in a separate folder:
 ✅ Uses `syncStates()` to send state updates to another chain.  
 ✅ Validates updates with `CrossChainUtils.validateCrossDomainCallback()`.  
 ✅ Ensures both contracts are deployed at the **same address** across chains using `CREATE3` or [Omni Deployer](https://www.npmjs.com/package/@omni-kit/omni-deployer).  
+✅ Deployment script: [`script/StateSync/DeployCounter.s.sol`](script/StateSync/DeployCounter.s.sol).  
+
 ---
 
 ### **2️⃣ Interop Example (`Interop-Example/`)**  
