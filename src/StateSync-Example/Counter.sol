@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {CrossChainUtils} from "omnikit/library/CrossChainUtils.sol";
+import {CrossChainUtils} from "omnikit/libraries/CrossChainUtils.sol";
 
 contract Counter {
     uint256 public number;
